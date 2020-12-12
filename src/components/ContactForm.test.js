@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import ContactForm from './ContactForm';
 
 test('Renders ContactForm without errors', () => {
@@ -20,14 +20,18 @@ test('User can fill out the form', () => {
     const msgInput = screen.getByLabelText(/message/i);
     const button = screen.getByRole('button', {name: /submit/i});
 
+    act(async() => {
     fireEvent.change(fnameInput, {target: {value: 'Gry'}});
     fireEvent.change(lnameInput, {target: {value: 'Hamilton'}});
     fireEvent.change(emailInput, {target: {value: 'greyson.r.hamilton@gmail.com'}});
     fireEvent.change(msgInput, {target: {value: 'I come from the land down under!'}});
 
+    });
+
     fireEvent.click(button);
 
-    await waitFor(() => expect(gry).toBeInTheDocument());
+    // await waitFor(() => expect(gry).toBeInTheDocument());
+
     // const gry = await screen.findByText(/gry/i);
     // expect(gry).toBeInTheDocument();
 
